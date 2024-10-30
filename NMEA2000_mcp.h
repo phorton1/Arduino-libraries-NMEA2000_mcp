@@ -45,6 +45,7 @@ private:
   MCP_CAN N2kCAN;
   unsigned char N2k_CAN_CS_pin;
   unsigned char N2k_CAN_clockset;
+  unsigned char N2k_CAN_speedset;
   unsigned char N2k_CAN_int_pin;
   bool IsOpen;
 
@@ -136,7 +137,9 @@ protected:
     virtual void InitCANFrameBuffers();
 
 public:
-    tNMEA2000_mcp(unsigned char _N2k_CAN_CS_pin, unsigned char _N2k_CAN_clockset = MCP_16MHz,
+    tNMEA2000_mcp(unsigned char _N2k_CAN_CS_pin,
+                  unsigned char _N2k_CAN_clockset = MCP_16MHz,
+                  unsigned char _N2k_CAN_speedset = CAN_250KBPS,
                   unsigned char _N2k_CAN_int_pin = 0xff, uint16_t _rx_frame_buf_size=MCP_CAN_RX_BUFFER_SIZE);
     void SetSPI(SPIClass *_pSPI) { N2kCAN.setSPI(_pSPI); }
 

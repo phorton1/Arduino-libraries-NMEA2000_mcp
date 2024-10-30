@@ -82,11 +82,13 @@ void PrintDecodedCanIdAndLen(unsigned long id, unsigned char len) {
 
 //*****************************************************************************
 tNMEA2000_mcp::tNMEA2000_mcp(unsigned char _N2k_CAN_CS_pin, unsigned char _N2k_CAN_clockset,
+                             unsigned char _N2k_CAN_speedset,
                              unsigned char _N2k_CAN_int_pin, uint16_t _rx_frame_buf_size) : tNMEA2000(), N2kCAN() {
 
   IsOpen=false;
   N2k_CAN_CS_pin=_N2k_CAN_CS_pin;
   N2k_CAN_clockset=_N2k_CAN_clockset;
+  N2k_CAN_speedset=_N2k_CAN_speedset;
   if (pNMEA2000_mcp1==0) { // Currently only first instance can use interrupts.
     N2k_CAN_int_pin=_N2k_CAN_int_pin;
     if ( UseInterrupt() ) {
@@ -161,7 +163,7 @@ bool tNMEA2000_mcp::CANOpen() {
 
     N2kCAN.init_CS(N2k_CAN_CS_pin);
     N2kCAN.reserveTxBuffers(1); // Reserve one buffer for fast packet.
-    IsOpen=(N2kCAN.begin(CAN_250KBPS,N2k_CAN_clockset)==CAN_OK);
+    IsOpen=(N2kCAN.begin(N2k_CAN_speedset,N2k_CAN_clockset)==CAN_OK);
 
     if (IsOpen && UseInterrupt() ) {
 #ifdef USE_SREG
